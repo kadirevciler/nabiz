@@ -5,7 +5,6 @@ struct BoostSheet: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     @State private var step = 0          // 0..3 analiz adımları, 4 = bitti
-    @State private var spin = false
 
     private let steps: [(String, String)] = [
         ("memorychip", L("Bellek ve açık uygulamalar", "Memory and open apps")),
@@ -36,15 +35,10 @@ struct BoostSheet: View {
         VStack(spacing: 26) {
             ZStack {
                 Circle().stroke(.white.opacity(0.06), lineWidth: 12)
-                Circle().trim(from: 0, to: 0.65)
-                    .stroke(AngularGradient(colors: [.clear, Palette.amber, Palette.pink], center: .center),
-                            style: StrokeStyle(lineWidth: 12, lineCap: .round))
-                    .rotationEffect(.degrees(spin ? 360 : 0))
-                    .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: spin)
+                SpinningRing(colors: [.clear, Palette.amber, Palette.pink], lineWidth: 12, period: 1)
                 Image(systemName: "bolt.fill").font(.system(size: 40)).foregroundStyle(Palette.amber)
             }
             .frame(width: 140, height: 140)
-            .onAppear { spin = true }
 
             VStack(alignment: .leading, spacing: 14) {
                 ForEach(Array(steps.enumerated()), id: \.offset) { i, s in

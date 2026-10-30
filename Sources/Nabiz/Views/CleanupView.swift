@@ -19,10 +19,8 @@ struct CleanupView: View {
                     .appear()
 
                     switch c.phase {
-                    case .idle:
-                        ScanPrompt { c.scan() }.transition(.opacity)
-                    case .scanning(let label):
-                        ScanningView(label: label, found: c.totalSize).transition(.opacity)
+                    case .idle, .scanning:
+                        ScanningView(label: c.scanLabel).transition(.opacity)
                     case .ready:
                         summary(c)
                         ForEach($c.categories) { $cat in CategoryCard(category: $cat) }
@@ -44,6 +42,7 @@ struct CleanupView: View {
             }
         }
         .animation(.spring(response: 0.45, dampingFraction: 0.8), value: c.selectedCount > 0)
+        .onAppear { if c.phase == .idle { c.scan() } }   // ekran açılınca taramayı hemen başlat
         .sheet(isPresented: $confirming) {
             ConfirmCleanupSheet(cleanup: c, onCancel: { confirming = false }, onConfirm: {
                 confirming = false
@@ -72,70 +71,30 @@ struct CleanupView: View {
     }
 }
 
-private struct ScanPrompt: View {
-    let start: () -> Void
-    @State private var pulse = false
-
-    var body: some View {
-        VStack(spacing: 26) {
-            ZStack {
-                ForEach(0..<3) { i in
-                    Circle().stroke(Palette.cyan.opacity(0.35), lineWidth: 2)
-                        .frame(width: 180, height: 180)
-                        .scaleEffect(pulse ? 1.6 : 1)
-                        .opacity(pulse ? 0 : 0.8)
-                        .animation(.easeOut(duration: 2.4).repeatForever(autoreverses: false).delay(Double(i) * 0.8), value: pulse)
-                }
-                Button(action: start) {
-                    Image(systemName: "magnifyingglass")
-                        .font(.system(size: 58, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .frame(width: 180, height: 180)
-                        .background(Circle().fill(LinearGradient(colors: [Palette.violet, Palette.cyan], startPoint: .topLeading, endPoint: .bottomTrailing)))
-                        .overlay(Circle().strokeBorder(.white.opacity(0.3), lineWidth: 1.5))
-                        .shadow(color: Palette.violet.opacity(0.6), radius: 30)
-                }
-                .buttonStyle(PressableStyle())
-                .help(L("Taramayı başlat", "Start scan"))
-            }
-            .frame(height: 300)
-            VStack(spacing: 8) {
-                Text(L("Gereksiz dosyaları bulalım", "Let\'s find junk files")).font(.title2.weight(.semibold))
-                Text(L("Önbellekler, günlükler, eski yükleyiciler ve geliştirici artıkları taranır.", "Caches, logs, old installers and developer leftovers are scanned."))
-                    .foregroundStyle(.secondary)
-                Label(L("Onayınız olmadan hiçbir dosya silinmez.", "Nothing is deleted without your approval."), systemImage: "lock.fill")
-                    .font(.callout).foregroundStyle(Palette.green).padding(.top, 4)
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.top, 30)
-        .onAppear { pulse = true }
-    }
-}
-
 private struct ScanningView: View {
     let label: String
-    let found: Int64
-    @State private var spin = false
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 22) {
             ZStack {
                 Circle().stroke(.white.opacity(0.06), lineWidth: 14)
-                Circle().trim(from: 0, to: 0.7)
-                    .stroke(AngularGradient(colors: [.clear, Palette.violet, Palette.cyan], center: .center),
-                            style: StrokeStyle(lineWidth: 14, lineCap: .round))
-                    .rotationEffect(.degrees(spin ? 360 : 0))
-                    .animation(.linear(duration: 1.1).repeatForever(autoreverses: false), value: spin)
+                SpinningRing(colors: [.clear, Palette.violet, Palette.cyan], lineWidth: 14)
                 Image(systemName: "doc.viewfinder").font(.system(size: 44)).foregroundStyle(Palette.cyan)
-                    .symbolEffect(.pulse)
             }
             .frame(width: 170, height: 170)
-            Text(L("Taranıyor", "Scanning")).font(.title3.weight(.semibold))
+            Text(L("Gereksiz dosyalar taranıyor", "Scanning for junk files")).font(.title3.weight(.semibold))
             Text(label).foregroundStyle(.secondary).contentTransition(.opacity).animation(.easeInOut, value: label)
+            VStack(spacing: 6) {
+                Label(L("Onayınız olmadan hiçbir dosya silinmez.", "Nothing is deleted without your approval."), systemImage: "lock.fill")
+                    .foregroundStyle(Palette.green)
+                Label(L("macOS İndirilenler klasörü için izin sorarsa İzin Ver'e basın.", "If macOS asks for access to Downloads, click Allow."),
+                      systemImage: "folder.badge.questionmark")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.callout)
+            .padding(.top, 6)
         }
-        .frame(maxWidth: .infinity).padding(.top, 60)
-        .onAppear { spin = true }
+        .frame(maxWidth: .infinity).padding(.top, 50)
     }
 }
 

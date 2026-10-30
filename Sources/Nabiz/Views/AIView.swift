@@ -352,7 +352,6 @@ private struct ProviderTile: View {
 
 private struct ResultCard: View {
     @Environment(AppModel.self) private var model
-    @State private var spin = false
 
     var body: some View {
         switch model.ai.phase {
@@ -362,12 +361,8 @@ private struct ResultCard: View {
             GlassCard(padding: 22, glow: Palette.amber) {
                 HStack(spacing: 16) {
                     ZStack {
-                        Circle().trim(from: 0, to: 0.7)
-                            .stroke(AngularGradient(colors: [.clear, Palette.amber, Palette.pink], center: .center),
-                                    style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                        SpinningRing(colors: [.clear, Palette.amber, Palette.pink], lineWidth: 4, period: 1)
                             .frame(width: 70, height: 70)
-                            .rotationEffect(.degrees(spin ? 360 : 0))
-                            .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: spin)
                         ProviderLogo(provider: p, size: 46)
                     }
                     VStack(alignment: .leading, spacing: 4) {
@@ -377,7 +372,6 @@ private struct ResultCard: View {
                     }
                 }
             }
-            .onAppear { spin = true }
             .transition(.opacity)
         case .failed(let msg):
             GlassCard(padding: 18, glow: Palette.red) {

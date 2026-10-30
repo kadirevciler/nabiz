@@ -252,3 +252,22 @@ struct Bar: View {
         .animation(.spring(response: 0.7, dampingFraction: 0.85), value: value)
     }
 }
+
+/// Dönen halka. Zamana bağlı çizilir; sonsuz tekrarlı animasyon kullanmaz,
+/// bu yüzden görünüm kaldırılırken geçişler takılmaz.
+struct SpinningRing: View {
+    var colors: [Color]
+    var lineWidth: CGFloat = 12
+    var period: Double = 1.1
+
+    var body: some View {
+        TimelineView(.animation(minimumInterval: 1.0 / 45)) { ctx in
+            let t = ctx.date.timeIntervalSinceReferenceDate
+            Circle()
+                .trim(from: 0, to: 0.7)
+                .stroke(AngularGradient(colors: colors, center: .center),
+                        style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                .rotationEffect(.degrees(t.truncatingRemainder(dividingBy: period) / period * 360))
+        }
+    }
+}

@@ -52,6 +52,7 @@ final class CleanupService {
     var selectedCount: Int { categories.reduce(0) { $0 + $1.selectedCount } }
     var hasScanned: Bool { phase != .idle && !isScanning }
     var isScanning: Bool { if case .scanning = phase { return true }; return false }
+    var scanLabel: String { if case .scanning(let l) = phase { return l }; return L("Hazırlanıyor", "Preparing") }
 
     static var definitions: [CleanupCategory] = [
         .init(id: "caches", title: L("Uygulama önbellekleri", "App caches"), icon: "square.stack.3d.up.fill",
@@ -194,3 +195,4 @@ final class CleanupService {
         return total
     }
 }
+
