@@ -14,6 +14,7 @@ struct RootView: View {
                 case .security: SecurityView()
                 case .advice: AdviceView()
                 case .cleanup: CleanupView()
+                case .ai: AIView()
                 }
             }
             .id(model.section)

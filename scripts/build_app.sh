@@ -8,6 +8,8 @@ rm -rf "$APP" build/AppIcon.iconset
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp .build/release/Nabiz "$APP/Contents/MacOS/Nabiz"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
+mkdir -p "$APP/Contents/Resources/Logos"
+cp Resources/Logos/*.png "$APP/Contents/Resources/Logos/"
 swift scripts/make_icon.swift build/AppIcon.iconset
 iconutil -c icns build/AppIcon.iconset -o "$APP/Contents/Resources/AppIcon.icns"
 codesign --force --deep --sign - "$APP"

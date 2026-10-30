@@ -46,6 +46,7 @@ final class AppModel {
     let metrics = MetricsService()
     let security = SecurityService()
     let cleanup = CleanupService()
+    let ai = AIService()
 
     init() {
         security.runAll()

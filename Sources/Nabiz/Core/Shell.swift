@@ -34,7 +34,7 @@ enum Shell {
 }
 
 enum Fmt {
-    static func pct(_ v: Double) -> String { "%\(Int((max(0, v) * 100).rounded()))" }
+    static func pct(_ v: Double) -> String { let n = Int((max(0, v) * 100).rounded()); return L("%\(n)", "\(n)%") }
     static func bytes(_ v: Int64) -> String { ByteCountFormatter.string(fromByteCount: max(0, v), countStyle: .file) }
     static func bytes(_ v: UInt64) -> String { bytes(Int64(clamping: v)) }
     static func rate(_ v: Double) -> String { bytes(Int64(v)) + L("/sn", "/s") }

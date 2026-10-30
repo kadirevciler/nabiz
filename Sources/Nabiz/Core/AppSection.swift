@@ -1,7 +1,7 @@
 import Foundation
 
 enum AppSection: String, CaseIterable, Identifiable {
-    case overview, performance, security, advice, cleanup
+    case overview, performance, security, advice, cleanup, ai
     var id: String { rawValue }
 
     var title: String {
@@ -11,6 +11,7 @@ enum AppSection: String, CaseIterable, Identifiable {
         case .security: return L("Güvenlik", "Security")
         case .advice: return L("Öneriler", "Advice")
         case .cleanup: return L("Temizlik", "Cleanup")
+        case .ai: return L("AI Analizi", "AI Analysis")
         }
     }
 
@@ -21,6 +22,7 @@ enum AppSection: String, CaseIterable, Identifiable {
         case .security: return L("macOS koruma ayarlarının denetimi", "An audit of macOS protection settings")
         case .advice: return L("Mac'inizi hızlandırmak ve korumak için yapılacaklar", "What to do to speed up and protect your Mac")
         case .cleanup: return L("Gereksiz dosyaları bulun, onayınızla temizleyin", "Find junk files and clean them with your approval")
+        case .ai: return L("Yapay zekâ ile sisteminizin durumunu yorumlatın", "Let AI interpret your system's state")
         }
     }
 
@@ -31,6 +33,7 @@ enum AppSection: String, CaseIterable, Identifiable {
         case .security: return "lock.shield.fill"
         case .advice: return "lightbulb.max.fill"
         case .cleanup: return "sparkles"
+        case .ai: return "brain.head.profile"
         }
     }
 

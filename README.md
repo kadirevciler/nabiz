@@ -12,6 +12,7 @@ Nabız, Mac'inizin performansını ve güvenliğini canlı izleyen, yapılması 
 - **Güvenlik** — FileVault, SIP, Gatekeeper, güvenlik duvarı ve gizli mod, otomatik ve bekleyen güncellemeler, ekran kilidi, otomatik giriş, misafir hesabı, SSH / ekran / dosya paylaşımı, arka plan öğeleri. Her bulgunun yanında ilgili Sistem Ayarları sayfasını açan simge bulunur.
 - **Öneriler** — Kritik / Uyarı / İpucu düzeyinde, tek simgeyle uygulanabilir öneriler.
 - **Temizlik** — Önbellekler, günlükler, geliştirici artıkları (Xcode DerivedData vb.), eski .dmg/.pkg yükleyiciler, büyük ve eski indirmeler, Çöp Sepeti. Dosyalar **Çöp Sepeti'ne taşınır**, geri alınabilir. Her silme işleminden önce ayrıntılı onay penceresi çıkar.
+- **AI Analizi** — İki seçenek: (1) **OpenAI, Claude, Gemini, DeepSeek, GLM (Z.ai) veya OpenRouter** API anahtarınızı ve model adını girin, sistemi seçtiğiniz model analiz etsin (anahtar macOS Anahtar Zinciri'nde saklanır); (2) yapay zekâ için düzenlenmiş **durum raporunu** kopyalayın, .md / .json kaydedin veya tek tıkla ChatGPT, Claude, Gemini vb. açıp yapıştırın.
 - **Yardım** — Yardım menüsünden veya **?** simgesinden açılır, konu bazlı arama yapılır (Türkçe karakter duyarsız, iki dilde).
 - **Türkçe / İngilizce** — Kenar çubuğundaki 🌐 simgesi, *Dil* menüsü veya **⇧⌘L** ile anında geçiş.
 
@@ -61,7 +62,8 @@ Nabız, Mac'inizin performansını ve güvenliğini canlı izleyen, yapılması 
 
 ## Güvenlik ve gizlilik
 
-- Hiçbir veri Mac'inizin dışına gönderilmez. Tek ağ isteği, macOS'un kendi `softwareupdate` aracının güncelleme sormasıdır.
+- Siz **AI analizi** başlatmadıkça hiçbir veri Mac'inizin dışına gönderilmez. AI analizinde durum raporu yalnızca seçtiğiniz sağlayıcıya gider ve bilgisayar adı, kullanıcı adı ya da dosya adı içermez. Diğer tek ağ isteği, macOS'un kendi `softwareupdate` aracının güncelleme sormasıdır.
+- API anahtarları macOS Anahtar Zinciri'nde saklanır.
 - Güvenlik denetimleri salt okunurdur; hiçbir ayar sizin yerinize değiştirilmez. Simgeler sadece ilgili ayar sayfasını açar.
 - Temizlik dosyaları Çöp Sepeti'ne taşır. Yalnızca *Çöp Sepeti* kategorisini seçerseniz kalıcı silme yapılır ve onay penceresi bunu kırmızı uyarıyla belirtir.
 - "Ağır uygulamaları kapat" normal *Çık* komutu gönderir (⌘Q gibi); kaydedilmemiş iş varsa uygulama size sorar.
@@ -70,7 +72,7 @@ Nabız, Mac'inizin performansını ve güvenliğini canlı izleyen, yapılması 
 
 | Kısayol | İşlev |
 |---|---|
-| ⌘1 – ⌘5 | Bölümler arası geçiş |
+| ⌘1 – ⌘6 | Bölümler arası geçiş |
 | ⇧⌘B | Hızlandır |
 | ⌘R | Tümünü yenile |
 | ⇧⌘S | Güvenlik taraması |
@@ -100,6 +102,7 @@ Nabız is a native macOS app that monitors your Mac's performance and security l
 - **Security** — FileVault, SIP, Gatekeeper, firewall & stealth mode, automatic and pending updates, screen lock, automatic login, guest account, SSH / screen / file sharing, background items — each with a shortcut to the right System Settings page.
 - **Advice** — Critical / Warning / Tip, each actionable with a single icon.
 - **Cleanup** — Caches, logs, developer leftovers, old installers, large old downloads, Trash. Files are **moved to the Trash** (recoverable) after a detailed confirmation.
+- **AI Analysis** — Two options: (1) enter an **OpenAI, Claude, Gemini, DeepSeek, GLM (Z.ai) or OpenRouter** API key and a model name and let that model analyze your system (keys live in the macOS Keychain); (2) copy the AI-ready **status report**, save it as .md / .json, or open ChatGPT, Claude, Gemini etc. in one click and paste it.
 - **Help** — From the Help menu or the **?** icon, with topic search in both languages.
 - **Turkish / English** — Switch instantly with the 🌐 icon, the *Language* menu, or **⇧⌘L**.
 
@@ -140,7 +143,7 @@ cp -R build/Nabız.app /Applications/
 
 ## Privacy & safety
 
-No data leaves your Mac. Security checks are read-only and never change settings for you. Cleanup moves files to the Trash; only the *Trash* category deletes permanently, with a red warning. Quitting heavy apps sends a normal Quit (like ⌘Q).
+No data leaves your Mac unless you start an **AI analysis**; then the status report (no computer, user or file names) goes only to the provider you chose. API keys are stored in the macOS Keychain. Security checks are read-only and never change settings for you. Cleanup moves files to the Trash; only the *Trash* category deletes permanently, with a red warning. Quitting heavy apps sends a normal Quit (like ⌘Q).
 
 ## Uninstall
 

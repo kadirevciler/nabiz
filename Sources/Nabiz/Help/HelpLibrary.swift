@@ -11,7 +11,7 @@ struct HelpTopic: Identifiable, Hashable {
 }
 
 enum HelpLibrary {
-    static var categories: [String] { [C.start, C.boost, C.perf, C.sec, C.clean, C.trouble] }
+    static var categories: [String] { [C.start, C.boost, C.perf, C.sec, C.clean, C.ai, C.trouble] }
 
     private enum C {
         static var start: String { L("Başlarken", "Getting Started") }
@@ -19,6 +19,7 @@ enum HelpLibrary {
         static var perf: String { L("Performans", "Performance") }
         static var sec: String { L("Güvenlik", "Security") }
         static var clean: String { L("Temizlik", "Cleanup") }
+        static var ai: String { L("Yapay Zekâ", "AI") }
         static var trouble: String { L("Sorun Giderme", "Troubleshooting") }
     }
 
@@ -53,7 +54,7 @@ Nabız never sends data to the internet; every check runs on your Mac.
               body: L("""
 Nabız'da düğmeler sade tutuldu; çoğu yalnızca bir simgedir. Ne yaptığını görmek için fareyi simgenin üzerinde bir an bekletin, kısa bir açıklama çıkar.
 
-• Sol kenardaki simgeler bölümler arasında geçiş yapar (⌘1 – ⌘5).
+• Sol kenardaki simgeler bölümler arasında geçiş yapar (⌘1 – ⌘6).
 • Sarı **şimşek** simgesi tek dokunuşla **Hızlandır** analizini başlatır.
 • **Dünya** simgesi dili Türkçe ile İngilizce arasında değiştirir.
 • **Soru işareti** bu yardım penceresini açar.
@@ -62,7 +63,7 @@ Nabız'da düğmeler sade tutuldu; çoğu yalnızca bir simgedir. Ne yaptığın
 """, """
 Buttons in Nabız are kept minimal; most are just an icon. Hover over an icon for a moment to see a short description.
 
-• Icons on the left edge switch between sections (⌘1 – ⌘5).
+• Icons on the left edge switch between sections (⌘1 – ⌘6).
 • The yellow **bolt** starts the one-tap **Boost** analysis.
 • The **globe** switches the language between Turkish and English.
 • The **question mark** opens this help window.
@@ -89,7 +90,7 @@ Above 90 is **Excellent**, above 75 **Good**, above 55 **Needs care**, below tha
         .init(id: "kisayollar", category: C.start, icon: "command", title: L("Klavye kısayolları", "Keyboard shortcuts"),
               keywords: "kısayol klavye tuş komut shortcut keyboard key command",
               body: L("""
-• **⌘1 – ⌘5**: Bölümler arasında geçiş
+• **⌘1 – ⌘6**: Bölümler arasında geçiş
 • **⌘R**: Tüm ölçümleri yenile
 • **⇧⌘S**: Güvenlik taramasını yeniden başlat
 • **⇧⌘K**: Gereksiz dosya taraması
@@ -97,7 +98,7 @@ Above 90 is **Excellent**, above 75 **Good**, above 55 **Needs care**, below tha
 • **⇧⌘L**: Dili değiştir
 • **⌘?**: Yardım
 """, """
-• **⌘1 – ⌘5**: Switch sections
+• **⌘1 – ⌘6**: Switch sections
 • **⌘R**: Refresh all metrics
 • **⇧⌘S**: Rerun the security scan
 • **⇧⌘K**: Junk file scan
@@ -343,6 +344,63 @@ System Settings › Privacy & Security › Full Disk Access › turn on Nabız, 
 
 If you prefer not to grant it, the other categories still work.
 """)),
+        .init(id: "ai-api", category: C.ai, icon: "key.horizontal.fill", title: L("API anahtarıyla AI analizi", "AI analysis with an API key"),
+              keywords: "yapay zeka ai api anahtar key model openai chatgpt claude anthropic gemini google deepseek glm zai zhipu openrouter analiz analysis keychain",
+              body: L("""
+**AI Analizi** bölümünde (⌘6) **API ile analiz** modunu seçin:
+
+1. Sağlayıcının logosuna tıklayın: **OpenAI, Claude, Gemini, DeepSeek, GLM (Z.ai)** veya **OpenRouter**.
+2. **Anahtar al** simgesi sağlayıcının anahtar sayfasını açar. Anahtarı oluşturup kopyalayın.
+3. Anahtarı alana yapıştırın ve **onay** simgesine basın. Anahtar macOS **Anahtar Zinciri**'nde şifreli saklanır; dosyaya yazılmaz. Kayıtlı anahtarı olan sağlayıcıda yeşil anahtar rozeti görünür.
+4. **Model adını** yazın (örn. claude-opus-5-5, gpt-5, gemini-2.5-pro, deepseek-chat, glm-4.6). **Sihirli değnek** simgesi önerilen modeli yazar. OpenRouter'da modeli **sağlayıcı/model** biçiminde yazın.
+5. Sarı **parıltı** düğmesine basın. Durum raporu seçtiğiniz sağlayıcıya gönderilir ve yanıt aynı ekranda gösterilir; kopyalayabilir veya .md olarak kaydedebilirsiniz.
+
+Rapor bilgisayar adı, kullanıcı adı ve dosya adı içermez. API kullanımı sağlayıcınız tarafından ücretlendirilebilir.
+""", """
+In **AI Analysis** (⌘6) choose **Analyze via API**:
+
+1. Click a provider logo: **OpenAI, Claude, Gemini, DeepSeek, GLM (Z.ai)** or **OpenRouter**.
+2. The **Get key** icon opens the provider's key page. Create and copy a key.
+3. Paste the key and press the **check** icon. It is stored encrypted in the macOS **Keychain**, never in a file. Providers with a saved key show a green key badge.
+4. Type the **model name** (e.g. claude-opus-5-5, gpt-5, gemini-2.5-pro, deepseek-chat, glm-4.6). The **magic wand** fills in a suggestion. On OpenRouter use the **provider/model** form.
+5. Press the yellow **sparkles** button. The status report is sent to the selected provider and the answer appears on the same screen; copy it or save it as .md.
+
+The report has no computer name, user name or file names. API usage may be billed by your provider.
+"""), related: ["ai-rapor", "ai-hatalar"]),
+        .init(id: "ai-rapor", category: C.ai, icon: "doc.text.magnifyingglass", title: L("Durum raporunu AI aracınıza verin", "Give the status report to your AI tool"),
+              keywords: "durum raporu rapor status report markdown json chatgpt claude gemini yükle upload kopyala copy paylaş share",
+              body: L("""
+API anahtarınız yoksa **Durum raporu** modunu kullanın:
+
+• **Kopyala ve aç** satırındaki bir logoya tıklayın: rapor panoya kopyalanır ve ChatGPT, Claude, Gemini, DeepSeek, Z.ai Chat veya OpenRouter Chat açılır. Sohbete yapıştırmanız yeterli.
+• Ya da raporu **.md** olarak kaydedip dosya olarak yükleyin. Yalnızca sayısal veri isterseniz **{ }** simgesiyle **.json** kaydedin.
+
+Rapor yapay zekâ için düzenlenmiştir: başta hazır bir görev metni, ardından özet, donanım, performans tablosu, en çok kaynak kullanan süreçler, güvenlik denetimi, gereksiz dosyalar, Nabız önerileri ve en sonda makine okunur JSON bulunur. Raporu güncel verilerle yenilemek için **döngü ok** simgesine basın.
+""", """
+No API key? Use **Status report** mode:
+
+• Click a logo under **Copy & open**: the report is copied to the clipboard and ChatGPT, Claude, Gemini, DeepSeek, Z.ai Chat or OpenRouter Chat opens. Just paste it into the chat.
+• Or save the report as **.md** and upload the file. For numbers only, save **.json** with the **{ }** icon.
+
+The report is organized for AI: a ready-made task prompt first, then summary, hardware, a performance table, top processes, the security audit, junk files, Nabız advice and finally machine-readable JSON. Press the **circular arrow** to refresh it with current data.
+"""), related: ["ai-api"]),
+        .init(id: "ai-hatalar", category: C.ai, icon: "exclamationmark.bubble.fill", title: L("AI analizi hata verdi", "AI analysis failed"),
+              keywords: "hata error 401 403 404 429 kota quota bakiye balance model bulunamadı not found anahtar geçersiz invalid key",
+              body: L("""
+• **HTTP 401 / 403**: Anahtar geçersiz veya yetkisiz. Yeni anahtar yapıştırıp kaydedin.
+• **HTTP 404 / 400 model**: Model adı yanlış ya da hesabınızda yok. Sağlayıcının model listesindeki adı birebir yazın.
+• **HTTP 402 / 429**: Bakiye veya kota bitti, ya da çok sık istek gönderildi. Biraz bekleyin veya hesabınıza kredi ekleyin.
+• **Zaman aşımı**: Büyük modeller birkaç dakika düşünebilir; tekrar deneyin ya da daha hızlı bir model seçin.
+
+Hata mesajı sağlayıcıdan geldiği gibi gösterilir.
+""", """
+• **HTTP 401 / 403**: The key is invalid or unauthorized. Paste and save a new key.
+• **HTTP 404 / 400 model**: The model name is wrong or not available on your account. Type the exact name from the provider's model list.
+• **HTTP 402 / 429**: Out of balance or quota, or too many requests. Wait a little or add credit.
+• **Timeout**: Large models may think for minutes; retry or pick a faster model.
+
+The error message is shown exactly as the provider returned it.
+""")),
         .init(id: "oneriler", category: C.trouble, icon: "lightbulb.max.fill", title: L("Öneriler nasıl oluşturulur?", "How is advice generated?"),
               keywords: "öneri tavsiye kritik uyarı ipucu advice recommendation critical warning tip",
               body: L("""
@@ -376,9 +434,9 @@ The pending-updates check needs an internet connection. On company-managed (MDM)
         .init(id: "gizlilik", category: C.trouble, icon: "hand.raised.fill", title: L("Gizlilik", "Privacy"),
               keywords: "gizlilik veri internet gönderme takip privacy data internet send tracking",
               body: L("""
-Nabız tamamen çevrimdışı çalışır. Hiçbir ölçüm, dosya adı veya ayar bilgisi Mac'inizin dışına gönderilmez. Tek ağ isteği, macOS'un kendi **softwareupdate** aracının Apple'a güncelleme sormasıdır.
+Siz **AI analizi** başlatmadıkça Nabız çevrimdışı çalışır. AI analizinde durum raporu yalnızca seçtiğiniz sağlayıcıya gönderilir; bilgisayar adı, kullanıcı adı ve dosya adı içermez. API anahtarları macOS Anahtar Zinciri'nde saklanır. Diğer tek ağ isteği, macOS'un kendi **softwareupdate** aracının Apple'a güncelleme sormasıdır.
 """, """
-Nabız works fully offline. No metric, file name or setting ever leaves your Mac. The only network request is macOS's own **softwareupdate** tool asking Apple for updates.
+Nabız works offline unless you start an **AI analysis**. Then the status report goes only to the provider you chose and contains no computer, user or file names. API keys are stored in the macOS Keychain. The only other network request is macOS's own **softwareupdate** tool asking Apple for updates.
 """)),
     ] }
 
